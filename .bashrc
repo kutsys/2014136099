@@ -1,0 +1,133 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+//~/.bashrc: non-login shell 을 위한 bash(1)에 의해 실행됨
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+//  /usr/share/doc/bash/examples/startup-files (bash-doc 패키지 안)을 보라
+# for examples
+//예를 들어
+# If not running interactively, don't do anything
+//대화식으로 운용되지 않으면, 어느것도 하지 않는다
+
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+# don't put duplicate lines or lines starting with space in the history.
+//복사 라인이나 히스토리상에 빈 칸이 있는 라인을 삽입하지 마세요.
+# See bash(1) for more options
+//더 많은 옵션을 보고싶으면 bash(1)을 보세요
+HISTCONTROL=ignoreboth
+# append to the history file, don't overwrite it
+//히스토리 파일에 첨부하고 중복 기재하지 마세요.
+shopt -s histappend
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+// 히스토리 길이 설정을 위해서는 BASH(1)에 있는 STSIZE=1000 와 HISTFILESIZE을 보세요
+HISTFILESIZE=2000
+# check the window size after each command and, if necessary,
+//각각의 명령 후에 필요하다면 window 크기를 확인하세요.
+# update the values of LINES and COLUMNS.
+//행과 열 값을 갱신하세요.
+shopt -s checkwinsize
+# If set, the pattern "**" used in a pathname expansion context will
+//만약 설정했다면 경로명(pathname) 확장 문맥에 쓰이는 "**" 패턴은
+# match all files and zero or more directories and subdirectories.
+//모든 파일과 0개 혹은 보다 많은 디렉토리들과 서브디렉토리들과 일치할 것이다.
+#shopt -s globstar
+//shell option -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+//보다 덜한 non-text 입력 파일을 만들기 위해선, lesspipe(1)을 보세요. 
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+# set variable identifying the chroot you work in (used in the prompt below)
+//당신이 작업하는 chroot들을 감별하는 변수들을 설정하라.
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+# set a fancy prompt (non-color, unless we know we "want" color)
+//화려한 prompt(non-color , 우리가 색상을 원하는 걸 알고있지 않는 한)을 설정하라.
+ 
+
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+# uncomment for a colored prompt, if the terminal has the capability; turned
+//색이 입혀진 prompt는 코멘트를 없앤다. 만약 terminal이 역량이 된다면,
+# off by default to not distract the user: the focus in a terminal window
+//초기값을 벗어나 사용자를 산만하지 않게 한다: terminal window에 있는 초점은.
+# should be on the output of commands, not on the prompt
+//prompt가 아닌, command들의 출력에 있어야 한다.
+#force_color_prompt=yes
+//force_color_prompt=yes
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    //우리에겐 색상 지원이 있다; Ecma-48을 준수하는 양상을 띤다.    
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    // (ISO/IEC-6429). 그러한 지원 결핍은 극도로 희귀하다. 그리고 그러한
+    # a case would tend to support setf rather than setaf.)
+    // 경우는 setaf 보다는 setf를 지원하는 경향이 있다.
+    color_prompt=yes
+    else
+    color_prompt=
+    fi
+fi
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+# If this is an xterm set the title to user@host:dir
+//만약 제목을 user@host:dir으로 설정하는 xterm이면
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+# enable color support of ls and also add handy aliases
+//색상 지원을 허용하고 또한 편리한 aliase들도 추가한다.
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+# colored GCC warnings and errors
+//색상이 입혀진 GCC 경고와 오류
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+//출력 GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+# Add an "alert" alias for long running commands.  Use like so:
+//더 많은 긴 running command "alert" alias들을 추가해라.
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+# Alias definitions.
+//Alias 정의
+# You may want to put all your additions into a separate file like
+//당신은 당신의 모든 addition들을 직접적으로 추가하는 대신에 ~/.bash_aliases와 같은 분리된 파일로 
+# ~/.bash_aliases, instead of adding them here directly.
+//넣고 싶어할 거다. 
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+//bash-doc 패키지에 있는 /usr/share/doc/bash-doc/examples을 보라.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+# enable programmable completion features (you don't need to enable
+//프로그래밍 가능한 완성 feature들을 사용하능하게 해라.(당신은 이것들을 
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+//사용 가능하게 할 필요는 없습니다. 만약 이미 사용가능한 상태면 
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
