@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <time.h>
 
 int main(int argc , char *argv[])
 {
@@ -13,9 +14,17 @@ int main(int argc , char *argv[])
 	char *Duplication;// 복사 파일명 저장
 	int in , out;//open 함수로 읽어들인 File Descriptor 값 저장
 	int nread;
-
+	clock_t start, end, buffer;
 	//argc == 1 -> '실행 파일명'만 입력받음
  	//argv[1] == NULL -> 복사 대상 파일 이름 입력 없음
+
+	if(argc > 3)
+	{
+		printf("입력 초과.\n");
+		printf("프로그램 종료.\n");
+		return;
+	}
+	
 	if(argc <= 1 || argv[1] == NULL)
 	{
 		printf("복사 대상 파일 이름이 입력되지 않았습니다.\n");
@@ -63,7 +72,6 @@ int main(int argc , char *argv[])
 	/*O_CREAT : 해당 파일이 없으면 생성한다. 파일의 접근권한을 지정하기 위해 접근권한 값을 추가해야 한다.*/
 	//S_IRUSR과 S_IWUSR은 File Access Permission Bit 
 	/*S_IRUSR : 사용자가 파일을 읽을 수 있음 , S_IWUSR : 사용자가 파일을 기록할 수 있음.*/
-	
 
 	// open함수 return 값 확인
 	if(in == -1 || out == -1)//in 과 out 중 하나라도 -1(파일이 존재하지 않는다면) 지시문 출력 후 프로그램 종료
@@ -73,17 +81,28 @@ int main(int argc , char *argv[])
 	}
   	
 	printf("복사를 시작합니다.\n");
-
+	
+	start = clock();
+	buffer = clock();
 	while((nread = read(in , block , sizeof(block))) > 0)
 	//read(int fd , void *buf , size_t nbytes)
 	//int fd : File Descriptor
 	//void *buf : 파일을 읽어 들일 버퍼
 	//size_t nbytes 버퍼의 크기
-	//반환 값 : 정상적으로 읽어들인 경우 -> bYtes 크기 |  실패한 경우 -> -1
+	//반환 값 : 정상적으로 읽어들인 경우 -> byte크기 ||  실패한 경우 -> -1
 	{
-		sleep(1);
+		
+          	write(out , block , nread);
 		printf("*");
-		write(out , block , nread);
+
+		end = clock();
+
+		if(end - start - buffer >= 1)
+		{
+			printf("*");
+		}
+		
+		buffer = end;
 	}
 
 	close(in);	
