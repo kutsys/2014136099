@@ -33,10 +33,6 @@ int main(int argc, char** argv)
                 buff_size = 64;
 	}	
        
-	else if (argc == 4)
-	{
-                buff_size = atoi(argv[3]);
-	} 
        
 	else//4개 이상의 입력에 대해서는 프로그램 종료로 예외처리 
 	{
@@ -81,14 +77,15 @@ int main(int argc, char** argv)
 		
 		iteration_end = clock();
 		
-		if((iteration_end - program_start - count) > 1)
+		if((iteration_end - program_start - count) > 0) 
 		{
-			printf("%d" , iteration_end - program_start - count);
 			printf("*");
 		}
 		count = iteration_end;
 	}
 	
+	program_end = clock();	
+
 	printf("\n수행 시간 : %d\n" , program_end -program_start);
 
  	free(buff); //buff 변수의 메모리 할당 해제
