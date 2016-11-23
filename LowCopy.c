@@ -113,7 +113,3 @@ int main(int argc , char *argv[])
 
 	return(0);
 }
-
-//1. write/read 함수 이해
-//write( 
-//2. open 함수 이해
