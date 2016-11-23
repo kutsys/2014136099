@@ -7,9 +7,9 @@
 int main(int argc , char *argv[])
 {
 	char block[1024];
-	char *Original;// 원본 파일명 저장
-	char *Duplication;// 복사 파일명 저장
-	int in , out;//open 함수로 읽어들인 File Descriptor 값 저장
+	char *Original;
+	char *Duplication;
+	int in , out;
 	int nread;
 	clock_t start, end, buffer;
 
