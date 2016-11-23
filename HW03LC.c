@@ -47,9 +47,9 @@ int main(int argc , char *argv[])
 		Duplication = argv[2];
 	}
 
-	in = open(Original , O_RDONLY);/* 복사 대상 파일을 읽기 전용으로 읽어들임 */
+	in = open(Original , O_RDONLY);
 	out = open(Duplication , O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR);
-	if(in == -1 || out == -1)//in 과 out 중 하나라도 -1(파일이 존재하지 않는다면) 지시문 출력 후 프로그램 종료
+	if(in == -1 || out == -1)
 	{
 		printf("File open error\n");
 		exit(1);
