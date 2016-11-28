@@ -49,6 +49,7 @@ int main(int argc , char *argv[])
 
 	in = open(Original , O_RDONLY);
 	out = open(Duplication , O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR);
+
 	if(in == -1 || out == -1)
 	{
 		printf("File open error\n");
@@ -59,10 +60,11 @@ int main(int argc , char *argv[])
 	
 	start = clock();
 	buffer = clock();
+
 	while((nread = read(in , block , sizeof(block))) > 0)
 	{
 		
-    write(out , block , nread);
+ 	        write(out , block , nread);
 		printf("*");
 
 		end = clock();
