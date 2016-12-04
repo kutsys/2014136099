@@ -6,8 +6,6 @@
 #include<signal.h>
 #include<sys/wait.h>
 
-
-
 char* timeToString(struct tm *t);
 
 void test_funct();
