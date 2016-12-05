@@ -1,0 +1,14 @@
+//getenv()함수를 사용하여 $HOME ,$PS1 ,$PATH ,$LD_LIBRARY_PATH 환경변수에 설정된 값을 화면에 표시한다.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void main()
+{	
+	printf("getenv실행파일 입니다.\n");
+	
+	printf("$PS1 : %s\n", getenv("PS1"));
+	printf("$HOME : %s\n", getenv("HOME"));
+	printf("$PATH : %s\n", getenv("PATH"));
+	printf("$LD_LIBRARY_PATH %s\n", getenv("LD_LIBRARY_PATH"));
+}
