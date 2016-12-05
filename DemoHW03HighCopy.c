@@ -15,19 +15,19 @@ int main(int argc, char** argv)
 
   if (argc < 3)//입력이 3개 미만 -> 실행 파일, 피복사 파일만 입력
   {
-  fprintf(stderr,"입력 오류.\n");
-  return;
+  	fprintf(stderr,"입력 오류.\n");
+ 	 return;
   }
 
   else if (argc == 3)//입력이 3개 -> 실행 파일, 피복사 파일 , 복사 파일(write 대상 파일) 입력
   {
-  buff_size = 64;
+ 	 buff_size = 1024;
   }	
         
   else 
   {
-  fprintf(stderr,"입력 오류.\n");
-  return;
+ 	 fprintf(stderr,"입력 오류.\n");
+ 	 return;
   }
        
   buff = (char*)calloc(buff_size, sizeof(char)); 
