@@ -25,11 +25,13 @@ void printdir(char *dir , int depth)
 		if(S_ISDIR(statbuf.st_mode))
 		{
 			if(strcmp("." , entry->d_name) == 0 || strcmp(".." , entry->d_name) == 0) 
+			{
 				continue;
-				if(entry->d_name[0] == '.') 
-				{
-					continue;
-				}				
+			}
+			if(entry->d_name[0] == '.') 
+			{
+				continue;	
+			}				
 			printf("%*s%s\n" , depth, "" ,entry->d_name);		
 		}			
 		else
