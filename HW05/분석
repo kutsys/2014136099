@@ -33,6 +33,10 @@ bar.o : bar.c
 //Depend : Target을 만들기 위해 필요한 요소를 기술
 //Command : 일반 shell 명령이 온다:
 
+//option 
+// -g : gdb option
+// -c : Assemble 0 -> linking X 
+
 clean :
 	rm *.o exe
 
