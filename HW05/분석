@@ -1,0 +1,38 @@
+CC = gcc
+
+TARGET = exe
+
+//매크로 지정 양식 : '대표 이름 = 내용'
+//CC = gcc
+//TARGET = exe
+//매크로 사용하려면 $(대표 이름) 으로 기술해야 한다
+
+
+$(TARGET) : mtest.o foo.o boo.o bar.o
+	$(CC) -o $(TARGET)  mtest.o foo.o boo.o bar.o
+//$(Target) -> exe
+
+
+mtest.o : mtest.c
+	$(CC) -g -c -o mtest.o mtest.c
+
+foo.o : foo.c
+	$(CC) -g -c -o foo.o foo.c
+
+boo.o : boo.c
+	$(CC) -g -c -o boo.o boo.c
+
+bar.o : bar.c
+	$(CC) -g -c -o bar.o bar.c
+
+
+//Makefile 기본 규칙 :
+// <Target> : <Depend>
+// <탭 문자><Command>
+//Target : 생성하고자 하는 목적물을 지칭
+//Depend : Target을 만들기 위해 필요한 요소를 기술
+//Command : 일반 shell 명령이 온다:
+
+clean :
+	rm *.o exe
+
