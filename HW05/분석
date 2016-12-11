@@ -1,11 +1,12 @@
 CC = gcc
-
-TARGET = exe
-
 //매크로 지정 양식 : '대표 이름 = 내용'
 //CC = gcc
-//TARGET = exe
 //매크로 사용하려면 $(대표 이름) 으로 기술해야 한다
+
+
+TARGET = exe
+//TARGET 은 프로그램에 의해 생성해 내고자 하는 파일의 이름, 수행하고자 하는 액션의 이름
+//여기서 생성해낸 파일 이름은 exe
 
 
 $(TARGET) : mtest.o foo.o boo.o bar.o
